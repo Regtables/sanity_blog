@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import MarkdownIt from 'markdown-it'
 import axios from 'axios'
+import Image from 'next/image'
 import { client, urlFor } from '../../client'
 
 const Post = ({postData}) => {
@@ -10,7 +11,7 @@ const Post = ({postData}) => {
   useEffect(() => {
     setPost(postData[0])
     // console.log(postData[0])
-  }, [])
+  }, [postData])
 
   console.log(post)
 
@@ -23,11 +24,11 @@ const Post = ({postData}) => {
         <h1>{post.title}</h1>
         {/* <section dangerouslySetInnerHTML = {{__html: htmlContent}}></section> */}
         {
-          post?.content?.map((item) => {
-           return <p>{item.children[0].text}</p>
+          post?.content?.map((item, index) => {
+           return <p key = {index}>{item.children[0].text}</p>
           })
         }
-        <img src = {post.imageUrl && urlFor(post.imageUrl)} width = '300px' height = '600px' />
+        <img src = {post.imageUrl && urlFor(post.imageUrl)} width = '300px' height = '600px' alt = 'img' />
         
     </article>
   )
