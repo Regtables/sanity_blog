@@ -5,13 +5,13 @@ const HomeLatestPosts = ({posts}) => {
   const [latestPosts, setLatestPosts] = useState([])
 
   useEffect(() => {
-    setLatestPosts(posts.data.slice(0,5))
+    setLatestPosts(posts.slice(0,5))
   }, [posts])
 
   function renderPostCards(){
     return (
       latestPosts.map((post) => (
-        <PostCard post = {post} key = {post.attributes.id} />
+        <PostCard post = {post} key = {post.id} />
       ))
     )
   }

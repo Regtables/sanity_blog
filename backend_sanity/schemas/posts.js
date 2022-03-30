@@ -7,10 +7,17 @@ export default {
   type: 'document',
   fields: [
     {
+      name: 'id',
+      title: 'Id',
+      type: 'number',
+      validation: Rule => Rule.required()
+    },
+    {
       name: 'title',
       title: 'Title',
       type: 'string',
-      description: 'The title of your blog post'
+      description: 'The title of your blog post',
+      validation: Rule => Rule.required()
     },
     {
       name: 'description',
@@ -23,7 +30,8 @@ export default {
       title: 'Content',
       type: 'array',
       of: [{type: 'block'}],
-      description: 'The content of your blog post'
+      description: 'The content of your blog post',
+      validation: Rule => Rule.required()
     },
     {
       name: 'imageUrl',

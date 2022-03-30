@@ -5,7 +5,7 @@ const AllPosts = ({posts}) => {
   function renderAllPosts() {
     return (
       posts.map((post) => (
-        <PostCard post = {post} key = {post.attributes.id}/>
+        <PostCard post = {post} key = {post.id}/>
       ))
     )
   }

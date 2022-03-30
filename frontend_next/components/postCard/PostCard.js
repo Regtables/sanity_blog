@@ -10,8 +10,8 @@ const PostCard = ({post}) => {
           whileHover = {{ scale: [1, 1.01] }}
           transition = {{ duration: 0.3, ease: 'easeInOut' }}
         >
-            <h3>{post.attributes.title}</h3>
-            <p>{post.attributes.description}</p>
+            <h3>{post.title}</h3>
+            <p>{post.description}</p>
         </motion.div>
     </Link>
   )
