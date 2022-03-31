@@ -40,7 +40,7 @@ const Post = ({postData}) => {
         }
         {
           post.imageUrl && (
-            <Image src = {image} alt = 'img' />
+            <img src = {urlFor(post.imageUrl)} alt = 'img' />
           )
         }
     
