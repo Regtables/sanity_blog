@@ -6,7 +6,7 @@ import { useNextSanityImage } from 'next-sanity-image'
 
 import { client, urlFor } from '../../client'
 
-import image from '../../assets/image.png'
+// import image from '../../assets/image.png'
 
 const Post = ({postData}) => {
   const md = new MarkdownIt();
