@@ -2,18 +2,28 @@ import React, { useState, useEffect } from 'react'
 import MarkdownIt from 'markdown-it'
 import axios from 'axios'
 import Image from 'next/image'
+import { useNextSanityImage } from 'next-sanity-image'
+
 import { client, urlFor } from '../../client'
+
+import image from '../../assets/image.png'
 
 const Post = ({postData}) => {
   const md = new MarkdownIt();
   const [post, setPost] = useState({})
+  const imageProps = useNextSanityImage(client, urlFor(postData.imageUrl));
 
+  // console.log('url ' + imageProps)
+
+  let imageUrl;
+  console.log(urlFor(post.imageUrl))
   useEffect(() => {
     setPost(postData[0])
+    // imageUrl = urlFor(post.imageUrl)
     // console.log(postData[0])
   }, [postData])
 
-  console.log(post)
+  // console.log(post)
 
   // let stringContent = post?.content?.toString();
 
@@ -28,7 +38,12 @@ const Post = ({postData}) => {
            return <p key = {index}>{item.children[0].text}</p>
           })
         }
-        <img src = {post.imageUrl && urlFor(post.imageUrl)} width = '300px' height = '600px' alt = 'img' />
+        {
+          post.imageUrl && (
+            <Image src = {image} alt = 'img' />
+          )
+        }
+    
         
     </article>
   )
@@ -37,35 +52,20 @@ const Post = ({postData}) => {
 export default Post
 
 export const getStaticProps = async ({params}) => {
-  // const postReq = await axios.get(`http://localhost:1337/api/posts/${params.id}`)
-  // const { id = '' } = params;
-  let postReq;
-
-  const url = `https://1hbpwfrj.api.sanity.io/v2022-01-31/data/query/production?query=*[_type == "posts"]`
-
-  const res = await axios.get(`https://1hbpwfrj.api.sanity.io/v2022-01-31/data/query/production?query=*[id==${params.id}]`)
-  console.log(res.data.result)
-
-  // postReq = await client.fetch(`*[id == ${params.id}`)
-  // console.log(postReq)
+  const query = `*[id == ${params.id}]`
+  const postReq = await client.fetch(query)
 
   return{
     props: {
-      postData: res.data.result,
+      postData: postReq,
     }
   }
 }
 
 export const getStaticPaths = async () => {
-  // const postsReq = await axios.get('http://localhost:1337/api/posts')
-
-  let postsReq;
-
-  postsReq = await client.fetch('*[_type == "posts"]');
-  console.log(postsReq)
+  const postsReq = await client.fetch('*[_type == "posts"]');
 
   const paths = postsReq.map((post) => {
-
     return {
       params: {
         id: post.id.toString(),
